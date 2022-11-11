@@ -162,7 +162,6 @@ class UseerServiceImplTest {
     @DisplayName("Deve retornar que o usuario solicitado foi deletado com sucesso")
     void whenDeleteWithSuccess() {
         when(repository.findById(anyInt())).thenReturn(optionalUseer);
-
         doNothing().when(repository).deleteById(anyInt()); // nao fazer nds quando o metodo findById for chamado pelo delete
         service.delete(ID);
         verify(repository, times(1)).deleteById(anyInt());
@@ -172,14 +171,14 @@ class UseerServiceImplTest {
     @DisplayName("Deve retornar um exception quando o usuario nao for encontrado")
     void whenDeleteWithUserNotFoundException(){
         when(repository.findById(anyInt()))
-                .thenThrow(new ObjectNotFoundException("user not found! id: "+ String.valueOf(anyInt())));
+                .thenThrow(new ObjectNotFoundException("user not found!"));
 
         try{
             service.delete(ID);
 
         }catch (Exception ex){
             assertEquals(ObjectNotFoundException.class, ex.getClass());
-            assertEquals("user not found! id: "+ String.valueOf(anyInt()), ex.getMessage());
+            assertEquals("user not found!", ex.getMessage());
 
         }
 

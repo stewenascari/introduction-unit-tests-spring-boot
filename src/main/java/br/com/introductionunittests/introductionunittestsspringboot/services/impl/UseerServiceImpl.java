@@ -35,13 +35,13 @@ public class UseerServiceImpl implements UseerService {
     public UseerDTO findById(Integer id) {
         return Optional.ofNullable(repository.findById(id).get())
                 .map(user -> UserMapper.INSTANCE.userToUserDTO(user))
-                .orElseThrow(() -> new ObjectNotFoundException("user not found! id:"+ String.valueOf(id)));
+                .orElseThrow(() -> new ObjectNotFoundException("user not found!"));
     }
 
     @Override
     public Useer findByEntityId(Integer id) {
         return Optional.ofNullable(repository.findById(id).get())
-                .orElseThrow(() -> new ObjectNotFoundException("user not found! id:"+ String.valueOf(id)));
+                .orElseThrow(() -> new ObjectNotFoundException("user not found!"));
     }
 
     public List<UseerDTO> findAll() {
