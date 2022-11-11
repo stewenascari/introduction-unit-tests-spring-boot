@@ -2,7 +2,7 @@ package br.com.introductionunittests.introductionunittestsspringboot.services.im
 
 import br.com.introductionunittests.introductionunittestsspringboot.Repository.UseerRepository;
 import br.com.introductionunittests.introductionunittestsspringboot.entities.Useer;
-import br.com.introductionunittests.introductionunittestsspringboot.exception.DataIntegratyViolationExceptionException;
+import br.com.introductionunittests.introductionunittestsspringboot.exception.DataIntegratyViolationException;
 import br.com.introductionunittests.introductionunittestsspringboot.exception.ObjectNotFoundException;
 import br.com.introductionunittests.introductionunittestsspringboot.models.UseerDTO;
 import br.com.introductionunittests.introductionunittestsspringboot.models.UseerRequestDTO;
@@ -61,7 +61,7 @@ public class UseerServiceImpl implements UseerService {
 
         Optional.ofNullable(repository.save(entity))
                 .map(user -> UserMapper.INSTANCE.userToUserDTO(user))
-                .orElseThrow(() -> new DataIntegratyViolationExceptionException("User not save. Try again!"));
+                .orElseThrow(() -> new DataIntegratyViolationException("User not save. Try again!"));
 
 
     }
@@ -75,7 +75,7 @@ public class UseerServiceImpl implements UseerService {
         repository.findByEmail(email)
                 .ifPresent(user -> {
                     if(!user.getId().equals(id)){
-                        throw new DataIntegratyViolationExceptionException("email already exists. Please try again!");}
+                        throw new DataIntegratyViolationException("email already exists. Please try again!");}
                 });
     }
 

@@ -2,7 +2,7 @@ package br.com.introductionunittests.introductionunittestsspringboot.services.im
 
 import br.com.introductionunittests.introductionunittestsspringboot.Repository.UseerRepository;
 import br.com.introductionunittests.introductionunittestsspringboot.entities.Useer;
-import br.com.introductionunittests.introductionunittestsspringboot.exception.DataIntegratyViolationExceptionException;
+import br.com.introductionunittests.introductionunittestsspringboot.exception.DataIntegratyViolationException;
 import br.com.introductionunittests.introductionunittestsspringboot.exception.ObjectNotFoundException;
 import br.com.introductionunittests.introductionunittestsspringboot.models.UseerDTO;
 import br.com.introductionunittests.introductionunittestsspringboot.models.UseerRequestDTO;
@@ -77,7 +77,7 @@ class UseerServiceImplTest {
             optionalUseer.get().setId(2);
             service.create(requestDTO);
         }catch (Exception ex){
-            assertEquals(DataIntegratyViolationExceptionException.class, ex.getClass());
+            assertEquals(DataIntegratyViolationException.class, ex.getClass());
             assertEquals(EMAIL_ALREADY_EXISTS_PLEASE_TRY_AGAIN, ex.getMessage());
         }
 
@@ -151,7 +151,7 @@ class UseerServiceImplTest {
             optionalUseer.get().setId(2);
             service.create(requestDTO);
         }catch (Exception ex){
-            assertEquals(DataIntegratyViolationExceptionException.class, ex.getClass());
+            assertEquals(DataIntegratyViolationException.class, ex.getClass());
             assertEquals(EMAIL_ALREADY_EXISTS_PLEASE_TRY_AGAIN, ex.getMessage());
         }
 
