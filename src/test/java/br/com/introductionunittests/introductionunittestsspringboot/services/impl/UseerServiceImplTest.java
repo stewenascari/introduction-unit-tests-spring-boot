@@ -167,4 +167,21 @@ class UseerServiceImplTest {
         service.delete(ID);
         verify(repository, times(1)).deleteById(anyInt());
     }
+
+    @Test
+    @DisplayName("Deve retornar um exception quando o usuario nao for encontrado")
+    void whenDeleteWithUserNotFoundException(){
+        when(repository.findById(anyInt()))
+                .thenThrow(new ObjectNotFoundException("user not found! id: "+ String.valueOf(anyInt())));
+
+        try{
+            service.delete(ID);
+
+        }catch (Exception ex){
+            assertEquals(ObjectNotFoundException.class, ex.getClass());
+            assertEquals("user not found! id: "+ String.valueOf(anyInt()), ex.getMessage());
+
+        }
+
+    }
 }
