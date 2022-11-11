@@ -47,8 +47,8 @@ public class UseerController {
     }
 
     @PostMapping
-    @ResponseStatus(code = HttpStatus.OK)
+    @ResponseStatus(code = HttpStatus.CREATED)
     public ResponseEntity<UseerDTO> create(@RequestBody @Valid UseerRequestDTO dto){
-        return ResponseEntity.ok(service.create(dto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
     }
 }

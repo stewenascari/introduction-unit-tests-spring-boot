@@ -10,11 +10,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
@@ -25,6 +28,7 @@ class UseerControllerTest {
     public static final String NAME = "teste 01";
     public static final String EMAIL = "teste01@gmail.com";
     public static final String PASSWORD = "123";
+    public static final int INDEX = 0;
 
     @InjectMocks
     private UseerController controller;
@@ -62,18 +66,58 @@ class UseerControllerTest {
     }
 
     @Test
-    void findAll() {
+    @DisplayName("Deve retornar uma lista de todos os usuarios existente na base")
+    void whenFindAllThenReturnSuccess() {
+        when(service.findAll()).thenReturn(List.of(dto));
+
+        ResponseEntity<List<UseerDTO>> response = controller.findAll();
+
+        assertNotNull(response);
+        assertNotNull(response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotEquals(0, response.getBody().size());
+        assertEquals(ResponseEntity.class, response.getClass());
+        assertEquals(UseerDTO.class, response.getBody().get(INDEX).getClass());
+
+        assertEquals(ID, response.getBody().get(INDEX).getId());
     }
 
     @Test
-    void delete() {
+    @DisplayName("Deve remover o usuario que foi solicitado")
+    void whenDeleteThenReturnSuccess() {
+
+        service.delete(anyInt());
+        ResponseEntity<Void> response = controller.delete(ID);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+        assertEquals(ResponseEntity.class, response.getClass());
+        assertNull(response.getBody());
+
     }
 
     @Test
+    @DisplayName("Deve atualizar os dados do usuario que solicitado")
     void update() {
+        service.update(anyInt(), any());
+
+        ResponseEntity<Void> response = controller.update(ID, requestDTO);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+        assertEquals(ResponseEntity.class, response.getClass());
+        assertNull(response.getBody());
     }
 
     @Test
-    void create() {
+    @DisplayName("Deve retornar o usuario que foi criado e o status do response como CREATED")
+    void whenCreateThenReturnCreated() {
+        when(service.create(any())).thenReturn(dto);
+
+        ResponseEntity<UseerDTO> response = controller.create(requestDTO);
+
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(ResponseEntity.class, response.getClass());
+        assertEquals(UseerDTO.class, response.getBody().getClass());
     }
 }
