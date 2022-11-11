@@ -22,10 +22,4 @@ public interface UserMapper {
     @Mapping(source = "email", target = "email")
     @Mapping(source = "password", target = "password")
     Useer userRequestToUser(UseerRequestDTO dto);
-
-
-    @Mapping(source = "name", target = "name")
-    @Mapping(source = "email", target = "email")
-    @Mapping(source = "password", target = "password")
-    Useer userDTORequestToUserRequest(UseerDTO dto);
 }

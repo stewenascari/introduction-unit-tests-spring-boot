@@ -20,8 +20,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 class UseerServiceImplTest {
@@ -162,5 +161,10 @@ class UseerServiceImplTest {
     @Test
     @DisplayName("Deve retornar que o usuario solicitado foi deletado com sucesso")
     void whenDeleteWithSuccess() {
+        when(repository.findById(anyInt())).thenReturn(optionalUseer);
+
+        doNothing().when(repository).deleteById(anyInt()); // nao fazer nds quando o metodo findById for chamado pelo delete
+        service.delete(ID);
+        verify(repository, times(1)).deleteById(anyInt());
     }
 }
