@@ -1,2 +1,9 @@
 # introduction-unit-tests-spring-boot
-Projeto dedicado para estudos de testes unitários no Spring Boot
+Projeto com intuito de se aprofundar nos testes unitários no Spring Boot.
+
+
+## Nesse projeto foi utilizado as seguintes tecnologias
+    > * Junit
+    > * Mockito
+    
+
